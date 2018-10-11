@@ -7,11 +7,11 @@ const Header = (props) => {
                 <a href="/" className="navbar-brand">{props.Title}</a>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a href="/" className="nav-link">Home</a>
+                        <a href="/" className="nav-link"><i className="fa fa-home"></i> Home</a>
                     </li>
 
                     <li className="nav-item">
-                        <a href="/customer" className="nav-link">Customer</a>
+                        <a href="/customer" className="nav-link"><i className="fa fa-user pr-1"></i>Customer</a>
                     </li>
                 </ul>
           </div>
