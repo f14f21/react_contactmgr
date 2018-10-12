@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-
+import axios from 'axios'
+import {Link} from 'react-router-dom';
 import {Consumer} from "../../context";
 
 class Contact extends Component {
@@ -10,10 +11,17 @@ class Contact extends Component {
         Noor:"Ys"
     };
     onDelete = (id,dispatch) => {
-        dispatch({
-            type:'DELETE_CONTACT',
-            payload:id
-        })
+        axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .then(res => {
+
+                dispatch({
+                    type:'DELETE_CONTACT',
+                    payload:id
+                });
+
+
+            });
+
     };
 
     onShowClick = (id,name,e) => {
@@ -26,7 +34,6 @@ class Contact extends Component {
 
         const {ContactObject} = this.props;
         const {showContactInfo} = this.state;
-
         return (
 
 
@@ -38,17 +45,19 @@ class Contact extends Component {
                             <div className="m-3">
 
                                 <div className="card mb-3">
-                                    <div className="card-header">{ContactObject.Name} &nbsp;&nbsp;
-                                        <i onClick={this.onShowClick.bind(this,ContactObject.id,ContactObject.Name)} className="fa fa-sort-down" style={{cursor:'pointer'}}/>
+                                    <div className="card-header">{ContactObject.name} &nbsp;&nbsp;
+                                        <i onClick={this.onShowClick.bind(this,ContactObject.id,ContactObject.name)} className="fa fa-sort-down" style={{cursor:'pointer'}}/>
                                         <i onClick={this.onDelete.bind(this,ContactObject.id,value.dispatch)} className="fa fa-trash" style={{cursor:'pointer',float:'right'}}/>
+
+                                        <Link to={`/contacts/edit/${ContactObject.id}`} ><i className="fa fa-pen mr-3" style={{cursor:'pointer',float:'right'}}></i> </Link>
                                     </div>
 
                                     <div className="card-body">
                                         {showContactInfo ? (
                                             <ul className="list-group">
-                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">{ContactObject.Name}</li>
-                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">Tel: {ContactObject.Tel}</li>
-                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">Age: {ContactObject.Age}</li>
+                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">{ContactObject.name}</li>
+                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">Tel: {ContactObject.phone}</li>
+                                                <li className="list-group-item-info m-1 mr-auto p-sm-1">Age: {ContactObject.id}</li>
                                             </ul>
                                         ) : null}
 
